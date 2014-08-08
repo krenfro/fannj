@@ -1,12 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.googlecode.fannj</groupId>
     <artifactId>fannj</artifactId>
     <packaging>jar</packaging>
-    <version>0.7-SNAPSHOT</version>
+    <version>0.7</version>
     <name>fannj</name>
     <description>Provides Java bindings to the Fast Artificial Neural Network Library (FANN).</description>
        
@@ -29,7 +27,8 @@
     <scm>
         <connection>scm:git:https://github.com/krenfro/fannj</connection>
         <url>https://github.com/krenfro/fannj</url>
-    </scm>
+      <tag>fannj-0.7</tag>
+  </scm>
     <distributionManagement>
         <repository>
             <id>sonatype-nexus-staging</id>
