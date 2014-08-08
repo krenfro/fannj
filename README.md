@@ -26,7 +26,7 @@ This project is now in the Maven Central Repository. If you use Maven 2 for your
         <dependency>
             <groupId>com.googlecode.fannj</groupId>
             <artifactId>fannj</artifactId>
-            <version>0.6</version>
+            <version>0.7</version>
         </dependency>
     </dependencies>
 
@@ -37,4 +37,4 @@ Linux something like:
     
     LD_LIBRARY_PATH=/usr/local/lib
 
-    java -Djna.library.path=/usr/local/lib -cp fannj-0.6.jar:jna-3.2.2.jar YourClass
+    java -Djna.library.path=/usr/local/lib -cp fannj-0.7.jar:jna-3.2.2.jar YourClass
