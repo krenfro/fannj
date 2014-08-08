@@ -4,7 +4,7 @@
     <groupId>com.googlecode.fannj</groupId>
     <artifactId>fannj</artifactId>
     <packaging>jar</packaging>
-    <version>0.7</version>
+    <version>0.8-SNAPSHOT</version>
     <name>fannj</name>
     <description>Provides Java bindings to the Fast Artificial Neural Network Library (FANN).</description>
        
@@ -27,7 +27,7 @@
     <scm>
         <connection>scm:git:https://github.com/krenfro/fannj</connection>
         <url>https://github.com/krenfro/fannj</url>
-      <tag>fannj-0.7</tag>
+      <tag>HEAD</tag>
   </scm>
     <distributionManagement>
         <repository>
