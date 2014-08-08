@@ -27,9 +27,8 @@
         </developer>
     </developers>
     <scm>
-        <connection>scm:svn:https://fannj.googlecode.com/svn</connection>
-        <developerConnection>scm:svn:https://fannj.googlecode.com/svn</developerConnection>
-        <url>https://fannj.googlecode.com/svn</url>
+        <connection>scm:git:https://github.com/krenfro/fannj</connection>
+        <url>https://github.com/krenfro/fannj</url>
     </scm>
     <distributionManagement>
         <repository>
@@ -53,11 +52,16 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>2.6.1</version>
-            </plugin>   
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.1</version>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-scm-plugin</artifactId>
-                <version>1.5</version>
+                <version>1.9.1</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
