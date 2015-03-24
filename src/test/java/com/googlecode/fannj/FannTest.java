@@ -22,18 +22,33 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.io.IOUtils;
 
 public class FannTest {
 
-    @Test
-    public void testFromFile() throws IOException {
-
-        File temp = File.createTempFile("fannj_", ".tmp");
+    public File build() throws IOException {
+ 
+        File temp = File.createTempFile("fannj_", ".net");
         temp.deleteOnExit();
-        IOUtils.copy(this.getClass().getResourceAsStream("xor_float.net"), 
-                new FileOutputStream(temp));
-        
+        IOUtils.copy(this.getClass().getResourceAsStream("xor.data"),  new FileOutputStream(temp));
+        List<Layer> layers = new ArrayList<Layer>();
+        layers.add(Layer.create(2));
+        layers.add(Layer.create(3, ActivationFunction.FANN_SIGMOID_SYMMETRIC));
+        layers.add(Layer.create(1, ActivationFunction.FANN_SIGMOID_SYMMETRIC));
+        Fann fann = new Fann(layers);
+        Trainer trainer = new Trainer(fann);
+        float desiredError = .001f;
+        float mse = trainer.train(temp.getPath(), 500000, 1000, desiredError);        
+        fann.save(temp.toString());
+        return temp;
+    }
+    
+    
+    @Test
+    public void testTrainAndRun() throws IOException {
+        File temp = build();
         Fann fann = new Fann(temp.getPath());
         assertEquals(2, fann.getNumInputNeurons());
         assertEquals(1, fann.getNumOutputNeurons());

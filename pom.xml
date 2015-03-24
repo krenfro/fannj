@@ -10,6 +10,9 @@
        
     <url>https://github.com/krenfro/fannj</url>
     <inceptionYear>2009</inceptionYear>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
     <licenses>
         <license>
             <name>GNU LGPL v3</name>
@@ -27,8 +30,8 @@
     <scm>
         <connection>scm:git:https://github.com/krenfro/fannj</connection>
         <url>https://github.com/krenfro/fannj</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
     <distributionManagement>
         <repository>
             <id>sonatype-nexus-staging</id>
@@ -100,7 +103,7 @@
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
-            <version>3.2.7</version>
+            <version>3.5.2</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
