@@ -20,7 +20,7 @@ Before using FannJ, you must build and install the FANN C library. FannJ has bee
 [JNA](https://github.com/twall/jna) - Provides the native access to FANN.
    
 ##Maven 2 Support
-This project is now in the Maven Central Repository. If you use Maven 2 for your builds, here is the stuff to put in your pom.xml
+This project is now in the Maven Central Repository.
 
     <dependencies>
         <dependency>
