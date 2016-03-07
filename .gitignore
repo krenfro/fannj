@@ -1,3 +1,4 @@
 target/*
 .nbactions
 hs_err_*
+nbactions.xml
