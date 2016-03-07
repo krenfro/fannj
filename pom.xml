@@ -12,6 +12,7 @@
     <inceptionYear>2009</inceptionYear>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <aol>${os.name}-${os.arch}</aol>
     </properties>
     <licenses>
         <license>
@@ -70,6 +71,15 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.5</version>
             </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <jna.library.path>${project.build.directory}/native/src</jna.library.path>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
         </plugins>
         <extensions>
             <extension>
@@ -86,18 +96,18 @@
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
-            <version>3.5.2</version>
+            <version>4.2.1</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>1.3.2</version>
+            <version>2.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.5</version>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -127,5 +137,186 @@
                 </plugins>
             </build>
         </profile>
+
+
+        <profile>
+            <id>linux</id>
+            <activation>
+                <os>
+                    <name>linux</name>
+                </os>
+            </activation>
+            <properties>
+                <os.name>linux</os.name>
+            </properties>
+
+            <!-- build native lib and create jar on linux systems-->
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.googlecode.maven-download-plugin</groupId>
+                        <artifactId>download-maven-plugin</artifactId>
+                        <version>1.2.1</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>wget</goal>
+                                </goals>
+                                <phase>generate-sources</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <url>https://sourceforge.net/projects/fann/files/fann/2.2.0/FANN-2.2.0-Source.zip/download</url>
+                            <outputFileName>fann.zip</outputFileName>
+                            <sha1>6f95232c018af7f62fb4c7e39d160771a867d6e7</sha1>
+                            <unpack>true</unpack>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.4.0</version>
+                        <executions>
+                            <execution>
+                                <id>cmake</id>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <phase>generate-sources</phase>
+                                <configuration>
+                                    <executable>cmake</executable>
+                                    <arguments>
+                                        <arg>../FANN-2.2.0-Source</arg>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>compile-fann</id>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <phase>generate-sources</phase>
+                                <configuration>
+                                    <executable>make</executable>
+                                    <workingDirectory>${project.build.directory}/native</workingDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <workingDirectory>${project.build.directory}/native</workingDirectory>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <version>2.6</version>
+                        <executions>
+                            <execution>
+                                <id>more-jars</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                                <configuration>
+                                    <classifier>${aol}</classifier>
+                                    <classesDirectory>${project.build.directory}/native/src/</classesDirectory>
+                                    <includes>
+                                        <include>libfann.so.*</include>
+                                    </includes>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>macosx</id>
+            <activation>
+                <os>
+                    <name>mac os x</name>
+                </os>
+            </activation>
+            <properties>
+                <os.name>macosx</os.name>
+            </properties>
+        </profile>
+        <profile>
+            <id>windows</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <properties>
+                <os.name>windows</os.name>
+            </properties>
+        </profile>
+        <profile>
+            <id>i386</id>
+            <activation>
+                <os>
+                    <arch>i386</arch>
+                </os>
+            </activation>
+            <properties>
+                <os.arch>x86</os.arch>
+            </properties>
+        </profile>
+        <profile>
+            <id>i486</id>
+            <activation>
+                <os>
+                    <arch>i486</arch>
+                </os>
+            </activation>
+            <properties>
+                <os.arch>x86</os.arch>
+            </properties>
+        </profile>
+        <profile>
+            <id>i586</id>
+            <activation>
+                <os>
+                    <arch>i586</arch>
+                </os>
+            </activation>
+            <properties>
+                <os.arch>x86</os.arch>
+            </properties>
+        </profile>
+        <profile>
+            <id>i686</id>
+            <activation>
+                <os>
+                    <arch>i686</arch>
+                </os>
+            </activation>
+            <properties>
+                <os.arch>x86</os.arch>
+            </properties>
+        </profile>
+        <profile>
+            <id>amd64</id>
+            <activation>
+                <os>
+                    <arch>amd64</arch>
+                </os>
+            </activation>
+            <properties>
+                <os.arch>x86_64</os.arch>
+            </properties>
+        </profile>
+        <profile>
+            <id>x86-64</id>
+            <activation>
+                <os>
+                    <arch>x86-64</arch>
+                </os>
+            </activation>
+            <properties>
+                <os.arch>x86_64</os.arch>
+            </properties>
+        </profile>
+  
     </profiles>
 </project>
+
