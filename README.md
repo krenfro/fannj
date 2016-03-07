@@ -38,3 +38,5 @@ Linux something like:
     LD_LIBRARY_PATH=/usr/local/lib
 
     java -Djna.library.path=/usr/local/lib -cp fannj-0.7.jar:jna-3.2.2.jar YourClass
+
+Update: the maven descriptor (pom.xml) now contains a section (atm only for Linux) that builds FANN from sources and packs the native library into a jar file called fannj-&lt;version&gt;-linux-x86_64.jar. If you put that jar onto the classpath, the JNA libs should be able to extract and load the contained libs all by themselves and without additional configuration.
