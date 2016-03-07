@@ -1,0 +1,7 @@
+language: java
+#install: sudo apt-get -y install libc6-i386
+script: mvn -V -B install
+dist: trusty
+notifications:
+  email: false
+
