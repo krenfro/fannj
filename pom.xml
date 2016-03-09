@@ -13,6 +13,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <aol>${os.name}-${os.arch}</aol>
+        <fann.version>2.2.0</fann.version>
     </properties>
     <licenses>
         <license>
@@ -76,7 +77,7 @@
                 <version>2.19.1</version>
                 <configuration>
                     <systemPropertyVariables>
-                        <jna.library.path>${project.build.directory}/native/src</jna.library.path>
+                        <jna.library.path>${project.build.directory}/native/${aol}</jna.library.path>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
@@ -166,7 +167,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <url>https://sourceforge.net/projects/fann/files/fann/2.2.0/FANN-2.2.0-Source.zip/download</url>
+                            <url>https://sourceforge.net/projects/fann/files/fann/${fann.version}/FANN-${fann.version}-Source.zip/download</url>
                             <outputFileName>fann.zip</outputFileName>
                             <sha1>6f95232c018af7f62fb4c7e39d160771a867d6e7</sha1>
                             <unpack>true</unpack>
@@ -178,49 +179,33 @@
                         <version>1.4.0</version>
                         <executions>
                             <execution>
-                                <id>cmake</id>
+                                <id>linux-native-build</id>
                                 <goals>
                                     <goal>exec</goal>
                                 </goals>
                                 <phase>generate-sources</phase>
                                 <configuration>
-                                    <executable>cmake</executable>
+                                    <executable>${project.basedir}/linux-native-build.sh</executable>
                                     <arguments>
-                                        <arg>../FANN-2.2.0-Source</arg>
+                                        <arg>${project.build.directory}/FANN-${fann.version}-Source</arg>
+                                        <arg>${project.build.directory}/native/${aol}</arg>
                                     </arguments>
                                 </configuration>
                             </execution>
-                            <execution>
-                                <id>compile-fann</id>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                                <phase>generate-sources</phase>
-                                <configuration>
-                                    <executable>make</executable>
-                                    <workingDirectory>${project.build.directory}/native</workingDirectory>
-                                </configuration>
-                            </execution>
                         </executions>
-                        <configuration>
-                            <workingDirectory>${project.build.directory}/native</workingDirectory>
-                        </configuration>
                     </plugin>
                     <plugin>
                         <artifactId>maven-jar-plugin</artifactId>
                         <version>2.6</version>
                         <executions>
                             <execution>
-                                <id>more-jars</id>
+                                <id>native-jar</id>
                                 <goals>
                                     <goal>jar</goal>
                                 </goals>
                                 <configuration>
                                     <classifier>${aol}</classifier>
-                                    <classesDirectory>${project.build.directory}/native/src/</classesDirectory>
-                                    <includes>
-                                        <include>libfann.so.*</include>
-                                    </includes>
+                                    <classesDirectory>${project.build.directory}/native</classesDirectory>
                                 </configuration>
                             </execution>
                         </executions>
@@ -302,7 +287,7 @@
                 </os>
             </activation>
             <properties>
-                <os.arch>x86_64</os.arch>
+                <os.arch>x86-64</os.arch>
             </properties>
         </profile>
         <profile>
@@ -313,7 +298,7 @@
                 </os>
             </activation>
             <properties>
-                <os.arch>x86_64</os.arch>
+                <os.arch>x86-64</os.arch>
             </properties>
         </profile>
   
